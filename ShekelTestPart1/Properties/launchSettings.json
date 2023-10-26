@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ShekelTestPart1": {
+      "commandName": "Project",
+      "commandLineArgs": "populate 2 2 2 2"
+    }
+  }
+}
