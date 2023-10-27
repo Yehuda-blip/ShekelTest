@@ -133,4 +133,5 @@ results on approach 2:
 This could mean:
 1. A software bug, since I ran almost 0 tests in this project.
 2. I have no idea how the SQLServer internals work.
+
 I will safely assume both.
