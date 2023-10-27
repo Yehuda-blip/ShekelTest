@@ -95,3 +95,18 @@ CREATE TABLE [dbo].[OrderDetails](
 GO
 ```
 
+Next, we need to create some software that will add dummy data to the DB - mostly done through the Populator class. 
+And now, our queries:
+The first query left joins the Products on the Order details, groups by product and sums the quantity. Notice that the grouping now needs to granulate by ProductDesc (so that a single value appears in each group). this is fine as long as ProductID is a primary key, forcing it to be unique (specifically, "more unique" than ProductDesc).
+```sql
+SELECT 
+    P.ProductID,
+    P.ProductDesc,
+    ISNULL(SUM(OD.Quantity), 0) AS TotalQuantityBought
+FROM 
+    dbo.Products P
+LEFT JOIN 
+    dbo.OrderDetails OD ON P.ProductID = OD.ProductID
+GROUP BY 
+    P.ProductID, P.ProductDesc;
+```
