@@ -1,13 +1,8 @@
 ﻿using EFCore.BulkExtensions;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace ShekelTestPart1
 {
@@ -37,7 +32,7 @@ namespace ShekelTestPart1
         {
             if (customerCount == 0 || productCount == 0 || orderDetailsCount == 0 || orderCount == 0)
                 throw new ArgumentException("All count parameters must be strictly positive");
-            if (orderCount < orderDetailsCount)
+            if (orderCount > orderDetailsCount)
                 throw new ArgumentException("must have orderDetails count larger or equal to order count");
 
             Type customerType = typeof(Customer);

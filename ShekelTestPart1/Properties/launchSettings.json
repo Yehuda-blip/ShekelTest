@@ -2,7 +2,11 @@
   "profiles": {
     "ShekelTestPart1": {
       "commandName": "Project",
-      "commandLineArgs": "populate 2 2 2 2"
+      "commandLineArgs": "populate 500 2000 5000000 100000"
+    },
+    "Profile 1": {
+      "commandName": "Project",
+      "commandLineArgs": "benchmark 50"
     }
   }
 }
