@@ -47,6 +47,11 @@ LEFT JOIN
 
         static void Main(string[] args)
         {
+            if (args.Length < 1)
+            {
+                Console.WriteLine(USAGE);
+                return;
+            }
             switch (args[0])
             {
                 case POPULATE:
