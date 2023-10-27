@@ -47,7 +47,8 @@ Here we create a database with `Customers`, `Products`, `Orders` and `[Order Det
 
 We can infer that the `Order Details` row is meant to allow the `Orders` table to reference multiple `Product` rows.
 
-There was also a request to write a query that will get the total quantity bought of each distinct product. Unfortunately I got a solved assignment link, so I decided this was a great time to refresh my .Net skills, and also prove that I can will manage working with a Database if I absolutely must.
+There was also a request to write a query that will get the total quantity bought of each distinct product. Unfortunately I got a solved assignment link, so I decided this was a great time to refresh my .Net 
+and SQL skills, and also prove that I can will manage working with a Database if I absolutely must.
 To do that, I wrote a simple application to measure the turnaround times of two queries that would accomplish this task. So first, I must set up a database. I took some freedom with the given script so that I could add primary keys everywhere (which includes adding a column to the order details table) - it is generally a good idea to have primary keys except for some special situations. More importantly, the keys allowed me to easily work with Entity-Framework, the standard .Net ORM. We now have(Assuming the TestDB exists):
 ```sql
 USE [TestDB]
@@ -110,3 +111,26 @@ LEFT JOIN
 GROUP BY 
     P.ProductID, P.ProductDesc;
 ```
+The second query uses a sub query to first collect groups of OrderDetails by ProductID, left join the products on these groups, and then gets the datails from the joined table. This means that grouping by ProductDesc is no longer necessary. It would also persumably be slightly faster as we should get a "smaller joined table", because we join on the already grouped OrderDetails.
+
+Running the benchmark (with the parameters that I pushed in the `ShekelTestPart1/Properties/launchSettings.json`) has pretty consistenly disproven my ambitious assumptions about query speed.
+```
+results on approach 1:
+    avg: 00:00:00.1167187    max: 00:00:00.1274228    min: 00:00:00.1108639
+results on approach 2:
+    avg: 00:00:00.1258801    max: 00:00:00.1549248    min: 00:00:00.1177030
+
+results on approach 1:
+    avg: 00:00:00.1268414    max: 00:00:00.1367713    min: 00:00:00.1209689
+results on approach 2:
+    avg: 00:00:00.1306104    max: 00:00:00.1354553    min: 00:00:00.1262685
+
+results on approach 1:
+    avg: 00:00:00.1343486    max: 00:00:00.1569341    min: 00:00:00.1266824
+results on approach 2:
+    avg: 00:00:00.1404764    max: 00:00:00.1590315    min: 00:00:00.1321841
+```
+This could mean:
+1. A software bug, since I ran almost 0 tests in this project.
+2. I have no idea how the SQLServer internals work.
+I will safely assume both.
