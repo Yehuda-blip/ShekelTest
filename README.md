@@ -45,11 +45,12 @@ GO
 Here we create a database with `Customers`, `Products`, `Orders` and `[Order Detail]` table - a mini E-commerce type of situation. The assignment requested a diagram:
 ![Example Image](./readme-misc/diagram1.png)
 
-We can infer that the `Order Details` row is meant to allow the `Orders` table to reference multiple `Product` rows.
+We can infer that the `Order Details` table is meant to allow the `Orders` table to reference multiple `Product` rows.
 
-There was also a request to write a query that will get the total quantity bought of each distinct product. Unfortunately I got a solved assignment link, so I decided this was a great time to refresh my .Net 
-and SQL skills, and also prove that I can will manage working with a Database if I absolutely must.
-To do that, I wrote a simple application to measure the turnaround times of two queries that would accomplish this task. So first, I must set up a database. I took some freedom with the given script so that I could add primary keys everywhere (which includes adding a column to the order details table) - it is generally a good idea to have primary keys except for some special situations. More importantly, the keys allowed me to easily work with Entity-Framework, the standard .Net ORM. We now have(Assuming the TestDB exists):
+There was also a request to write a query that will get the total quantity bought of each distinct product. Unfortunately I got a solved assignment link, so I decided this was a great time to refresh my `.Net` 
+and `SQL` skills, and also prove that will manage working with a Database if I absolutely must.
+
+To do that, I wrote a simple application to measure the turnaround times of two queries that would accomplish this task. So first, I must set up a database. I took some freedom with the given script so that I could add primary keys everywhere (which includes adding a column to the order details table) - it is generally a good idea to have primary keys except for some special situations. More importantly, the keys allowed me to easily work with Entity-Framework, the standard `.Net` ORM. We now have (Assuming the TestDB exists):
 ```sql
 USE [TestDB]
 GO
@@ -98,6 +99,7 @@ GO
 
 Next, we need to create some software that will add dummy data to the DB - mostly done through the Populator class. 
 And now, our queries:
+
 The first query left joins the Products on the Order details, groups by product and sums the quantity. Notice that the grouping now needs to granulate by ProductDesc (so that a single value appears in each group). this is fine as long as ProductID is a primary key, forcing it to be unique (specifically, "more unique" than ProductDesc).
 ```sql
 SELECT 
@@ -130,7 +132,7 @@ LEFT JOIN
         ProductID
 ) Q ON P.ProductID = Q.ProductID;
 ```
-Running the benchmark (with the parameters that I pushed in the `ShekelTestPart1/Properties/launchSettings.json`) has pretty consistenly disproven my ambitious assumptions about query speed.
+Running the benchmark (with the parameters that I pushed in the `ShekelTestPart1/Properties/launchSettings.json` file) has pretty consistenly disproven my ambitious assumptions about query speed.
 ```
 results on approach 1:
     avg: 00:00:00.1167187    max: 00:00:00.1274228    min: 00:00:00.1108639
