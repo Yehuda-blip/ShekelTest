@@ -1,4 +1,9 @@
-# ShekelTestPart1
+# Shekel Test
+
+The assignment had 2 parts, which I refer to as part 1 and part 2. All of the files in this repository deal with part 1, except for `ShekelTestPart2.zip` which is the compressed  `Northwind` solution.
+
+
+## ShekelTestPart1
 
 Part 1 of the assignment was to analyze this script:
 ```sql
@@ -162,3 +167,8 @@ It will be safe (and probably correct) to assume all three.
 Notes on running the benchmark:
 
 This program uses an already existing TestDB setup on localhost. You can find a hard-coded connection string in the `OnConfiguring` method in the `ShekelTestEntityModel` class source - I wasn't going to pretend that I'm configuring a secure application (as you will see, the connection string uses `Integrated Security` and does not actually hold any secrets). At any rate, the updated `SQL` script and the location of the connection string should be enough to easily set up a mock database that this program can handle.
+
+
+## Shekel test part 2 
+
+This was to do some winforms work. I must say that sending a solution by mail to be ran on my machine is sketchy as hell. I did this part on an ec2 instance far far away in hopes that whatever malware was in the compiled files couldn't get to me...
