@@ -155,9 +155,10 @@ This could mean:
 3. Something else that I'm completely missing.
 
 It will be safe (and probably correct) to assume all three.
-
-
-
+\
+\
+\
+\
 Notes on running the benchmark:
 
 This program uses an already existing TestDB setup on localhost. You can find a hard-coded connection string in the `OnConfiguring` method in the `ShekelTestEntityModel` class source - I wasn't going to pretend that I'm configuring a secure application (as you will see, the connection string uses `Integrated Security` and does not actually hold any secrets). At any rate, the updated `SQL` script and the location of the connection string should be enough to easily set up a mock database that this program can handle.
