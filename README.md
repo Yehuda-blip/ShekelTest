@@ -112,7 +112,24 @@ GROUP BY
     P.ProductID, P.ProductDesc;
 ```
 The second query uses a sub query to first collect groups of OrderDetails by ProductID, left join the products on these groups, and then gets the datails from the joined table. This means that grouping by ProductDesc is no longer necessary. It would also persumably be slightly faster as we should get a "smaller joined table", because we join on the already grouped OrderDetails.
-
+```sql
+SELECT 
+    P.ProductID,
+    P.ProductDesc,
+    ISNULL(Q.TotalQuantityBought, 0) AS TotalQuantityBought
+FROM 
+    dbo.Products P
+LEFT JOIN 
+(
+    SELECT 
+        ProductID,
+        SUM(Quantity) AS TotalQuantityBought
+    FROM 
+        dbo.OrderDetails
+    GROUP BY 
+        ProductID
+) Q ON P.ProductID = Q.ProductID;
+```
 Running the benchmark (with the parameters that I pushed in the `ShekelTestPart1/Properties/launchSettings.json`) has pretty consistenly disproven my ambitious assumptions about query speed.
 ```
 results on approach 1:
@@ -133,5 +150,6 @@ results on approach 2:
 This could mean:
 1. A software bug, since I ran almost 0 tests in this project.
 2. I have no idea how the SQLServer internals work.
+3. Something else that I'm completely missing.
 
-I will safely assume both.
+It will be safe (and probably correct) to assume all three.
